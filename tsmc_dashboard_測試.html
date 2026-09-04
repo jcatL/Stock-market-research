@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>台積電 (2330) 財務分析儀表板</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: 'Microsoft JhengHei', sans-serif; background: #f0f4f8; margin: 20px; }
+    .header { background: linear-gradient(135deg, #1a365d, #2b6cb0, #3182ce); color: white; padding: 20px; border-radius: 8px; }
+    .tabs { display: flex; margin-top: 20px; }
+    .tab { padding: 10px 20px; cursor: pointer; background: white; border: 1px solid #ccc; margin-right: 5px; border-radius: 6px; }
+    .tab.active { background: #2b6cb0; color: white; }
+    .tab-content { display: none; margin-top: 20px; }
+    .tab-content.active { display: block; }
+    .kpi-row { display: flex; gap: 16px; margin-bottom: 20px; }
+    .kpi-card { flex: 1; background: white; padding: 16px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .kpi-label { font-size: 0.8rem; color: #555; }
+    .kpi-value { font-size: 1.5rem; font-weight: bold; }
+    .up { color: green; } .down { color: red; }
+    .chart-container { height: 300px; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <h1>台積電 (2330) 財務分析儀表板</h1>
+    <p>資料來源：假數據｜分析期間：2021 – 2023</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('ops')">📊 經營分析</div>
+    <div class="tab" onclick="switchTab('profit')">💰 獲利分析</div>
+  </div>
+
+  <!-- Tab 1 -->
+  <div id="ops" class="tab-content active">
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">營收 (億元)</div>
+        <div class="kpi-value">2,000</div>
+        <div class="up">▲ 成長 10%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">毛利率 (%)</div>
+        <div class="kpi-value">52%</div>
+        <div class="up">▲ 上升</div>
+      </div>
+    </div>
+    <div class="chart-container">
+      <canvas id="opsChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Tab 2 -->
+  <div id="profit" class="tab-content">
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">EPS</div>
+        <div class="kpi-value">30</div>
+        <div class="up">▲ 穩定</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">ROE (%)</div>
+        <div class="kpi-value">28%</div>
+        <div class="down">▼ 略降</div>
+      </div>
+    </div>
+    <div class="chart-container">
+      <canvas id="profitChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(name) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+      document.getElementById(name).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // 經營分析圖表
+    new Chart(document.getElementById('opsChart'), {
+      type: 'bar',
+      data: {
+        labels: ['2021', '2022', '2023'],
+        datasets: [{
+          label: '營收 (億元)',
+          data: [1800, 2000, 2200],
+          backgroundColor: 'rgba(49,130,206,0.5)'
+        }]
+      }
+    });
+
+    // 獲利分析圖表
+    new Chart(document.getElementById('profitChart'), {
+      type: 'line',
+      data: {
+        labels: ['2021', '2022', '2023'],
+        datasets: [{
+          label: 'EPS',
+          data: [25, 28, 30],
+          borderColor: 'green',
+          fill: false
+        }]
+      }
+    });
+  </script>
+</body>
+</html>
